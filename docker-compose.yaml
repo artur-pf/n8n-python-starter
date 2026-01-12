@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   n8n:
     container_name: n8n_dev
@@ -15,7 +13,7 @@ services:
       - N8N_PROTOCOL=http
       - WEBHOOK_URL=http://localhost:5678
 
-      # --- Task runners (external mode) ---
+      # For Task runners
       - N8N_RUNNERS_ENABLED=true
       - N8N_RUNNERS_MODE=external
       - N8N_RUNNERS_BROKER_LISTEN_ADDRESS=0.0.0.0
