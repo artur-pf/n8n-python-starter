@@ -1,2 +1,2 @@
 # Small Example for Plotly in n8n
-Fun Example for real Data Scientist!
+A fun example for a real data scientist!
