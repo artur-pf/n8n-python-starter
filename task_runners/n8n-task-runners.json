@@ -49,9 +49,9 @@
         "PYTHONPATH": "/opt/runners/task-runner-python",
         "N8N_RUNNERS_HEALTH_CHECK_SERVER_HOST": "0.0.0.0",
 
-        "N8N_RUNNERS_STDLIB_ALLOW": "io,base64,datetime,math,json,re,statistics,typing,collections,itertools,functools,operator,pathlib",
+        "N8N_RUNNERS_STDLIB_ALLOW": "io,base64,random,datetime,math,json,re,statistics,typing,collections,itertools,functools,operator,pathlib",
 
-        "N8N_RUNNERS_EXTERNAL_ALLOW": "numpy,pandas,matplotlib,matplotlib.pyplot,matplotlib.dates,dateutil,pytz,tzdata,PIL,contourpy,cycler,kiwisolver,packaging,pyparsing,fontTools,polars"
+        "N8N_RUNNERS_EXTERNAL_ALLOW": "numpy,plotly,pandas,matplotlib,matplotlib.pyplot,matplotlib.dates,dateutil,pytz,tzdata,PIL,contourpy,cycler,kiwisolver,packaging,pyparsing,fontTools,polars"
       }
     }
   ]

@@ -1,0 +1,86 @@
+{
+  "name": "My Plotly Example",
+  "nodes": [
+    {
+      "parameters": {
+        "language": "pythonNative",
+        "pythonCode": "import random\nimport plotly.graph_objects as go\nimport plotly.io as pio\n\nrandom.seed(42)\n\ndef make_cluster(center, sigma, n):\n    cx, cy, cz = center\n    x = [random.gauss(cx, sigma) for _ in range(n)]\n    y = [random.gauss(cy, sigma) for _ in range(n)]\n    z = [random.gauss(cz, sigma) for _ in range(n)]\n    return x, y, z\n\n# 3 clusters\nn = 180\nclusters = [\n    ((0, 0, 0),   0.8, n),\n    ((4, 4, 2),   0.9, n),\n    ((-4, 3, -2), 0.7, n),\n]\n\ntraces = []\nfor i, (center, sigma, cnt) in enumerate(clusters, start=1):\n    x, y, z = make_cluster(center, sigma, cnt)\n    traces.append(\n        go.Scatter3d(\n            x=x, y=y, z=z,\n            mode=\"markers\",\n            name=f\"Cluster {i}\",\n            marker=dict(size=4),\n        )\n    )\n\nfig = go.Figure(data=traces)\nfig.update_layout(\n    title=\"3D Scatter (3 Clusters)\",\n    scene=dict(\n        xaxis_title=\"X\",\n        yaxis_title=\"Y\",\n        zaxis_title=\"Z\",\n    ),\n    margin=dict(l=0, r=0, t=50, b=0),\n)\n\n# Turn the Plotly figure into a full HTML document string\nhtml = pio.to_html(\n    fig,\n    full_html=True,\n    include_plotlyjs=\"cdn\",\n    config={\"scrollZoom\": True, \"displayModeBar\": True},\n)\n\n# n8n Code node should return items like this\nreturn [{\"json\": {\"html\": html}}]"
+      },
+      "id": "3d12830a-e1e2-4380-87ef-15880f60a601",
+      "name": "Plotly 3D Scatter (Python)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        32,
+        640
+      ]
+    },
+    {
+      "parameters": {
+        "path": "96be99ad-676b-480a-93cc-c06bc70471b9",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "ec7c9852-8d26-4598-bfbd-17692bbb1fc4",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -240,
+        640
+      ],
+      "webhookId": "96be99ad-676b-480a-93cc-c06bc70471b9"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $json.html }}",
+        "options": {}
+      },
+      "id": "a9fa7882-548b-4731-aefd-d90de11e4859",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        640
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Plotly 3D Scatter (Python)": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Plotly 3D Scatter (Python)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "b26e6ae7-2542-4490-8a8c-e63f4e0c0ff7",
+  "meta": {
+    "instanceId": "f899d51a1190fa3d7034c85b5e0abee36154b589a5a4cae5660567634ea4c5e0"
+  },
+  "id": "pwKKi7-jrKdUAfsVc117c",
+  "tags": []
+}
